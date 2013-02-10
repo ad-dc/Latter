@@ -98,13 +98,4 @@ ActiveRecord::Schema.define(:version => 20121213022523) do
   add_index "players", ["email"], :name => "index_players_on_email", :unique => true
   add_index "players", ["reset_password_token"], :name => "index_players_on_reset_password_token", :unique => true
 
-  create_table "web_hooks", :force => true do |t|
-    t.string   "destination", :limit => 300
-    t.string   "event",       :limit => 25
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  add_index "web_hooks", ["destination", "event"], :name => "index_web_hooks_on_destination_and_event", :unique => true
-
 end
