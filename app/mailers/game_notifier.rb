@@ -1,5 +1,5 @@
 class GameNotifier < ActionMailer::Base
-  default from: "notifications@latter.3months.com"
+  default from: "notifications@appdirect.com"
 
   def new_game(game)
     @game = game
