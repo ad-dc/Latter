@@ -74,15 +74,15 @@ Latter::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'appdirect.com' }
-  config.action_mailer.asset_host = "http://info.appdirect.com"
+  config.action_mailer.default_url_options = { :host => 'aqueous-reaches-9634.herokuapp.com' }
+  config.action_mailer.asset_host = "http://aqueous-reaches-9634.herokuapp.com"
 
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
     :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
+    :user_name      => 'appdirect-latter',
+    :password       => '8ziTPXx73PrmEu',
     :domain         => 'heroku.com'
   }
   ActionMailer::Base.delivery_method = :smtp
