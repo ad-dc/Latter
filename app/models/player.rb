@@ -15,12 +15,14 @@ class Player < ActiveRecord::Base
   default_scope where(:active => true)
 
   has_gravatar
-  devise :database_authenticatable,
-         :confirmable,
-         :recoverable,
-         :trackable,
-         :validatable,
-         :token_authenticatable
+  devise  :omniauthable, 
+          :database_authenticatable, 
+          :recoverable, 
+          :rememberable, 
+          :trackable, 
+          :validatable,
+          :token_authenticatable
+
 
   before_validation :set_default_password, :on => :create
   before_save :ensure_authentication_token
@@ -44,7 +46,7 @@ class Player < ActiveRecord::Base
 
   has_many :challenged_games, :class_name => 'Game', :foreign_key => 'challenged_id', :dependent => :destroy
   has_many :challenger_games, :class_name => 'Game', :foreign_key => 'challenger_id', :dependent => :destroy
-  has_many :won_games, :class_name => 'Game', :foreign_key => 'winner_id'
+  has_many :won_games,        :class_name => 'Game', :foreign_key => 'winner_id'
   
   has_many :awards, :dependent => :destroy
   has_many :badges, :through => :awards
@@ -201,8 +203,18 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def self.find_for_open_id(access_token, signed_in_resource=nil)
+    data = access_token.info
+    if player = Player.find_by_email(data["email"])
+      player
+    else # Create a user with a stub password.
+      Player.create!(:name => data["name"], :email => data["email"], :password => Devise.friendly_token[0,20])
+    end
+  end
 
   private
+
+
 
   # Private - Set a default password for the user
   #

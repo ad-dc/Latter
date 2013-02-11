@@ -1,5 +1,5 @@
 Latter::Application.routes.draw do
-  devise_for :players
+  devise_for :players, :controllers => { :omniauth_callbacks => "players/omniauth_callbacks" }
 
   resources :games, :except => [:edit, :update] do
     post :complete, :on => :member
@@ -10,7 +10,7 @@ Latter::Application.routes.draw do
   resources :statistics, :only => [:index]
   resources :players
   resources :badges, :only => [:index, :show]
-
+  
   root :to => 'players#index'
   match "/pages/*slug" => "pages#show", :as => 'page'
 
